@@ -1,0 +1,20 @@
+1.Clearing existing disk partition table
+dd if=/dev/zero of=/dev/target_disk bs=512 count=1
+
+2.Defining LVM physical volumes
+pvcreate /dev/target_disk
+
+3.Show volume status in verbose mode
+pvscan -v
+
+4.Create a Volume Group
+vgcreate [volume_name] [disk1] [disk2] ..
+
+5.Extend a Volumn Group
+vgextend [vol_name] [disk1] [disk2] ..
+
+6.Defining LVM logical volumes
+lvcreate -L [size] -n [name] [vol_group]
+
+7.Show volume status 
+pvscan -v
