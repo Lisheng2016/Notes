@@ -1,0 +1,16 @@
+what is the difference between a login shell between /bin/false and /sbin/nologin?
+
+to check what will happen,i create two users:nologin and binfalse with a login shell of /sbin/nologin and /bin/false respectively.
+
+result :
+[root@nas ~]# ssh nologin@localhost
+nologin@localhost's password:
+This account is currently not available.
+Connection to localhost closed.
+
+[root@nas ~]# ssh binfale@localhost
+binfale@localhost's password:
+Permission denied, please try again.
+
+/sbin/nologin will show that this account is not available 
+/bin/false just let server think that the authentication of the user and his password failed anyway,which will be always a "permission denied"
