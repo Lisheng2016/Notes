@@ -1,0 +1,20 @@
+[service name] [socket type] [protocol] [wait/nowait] [start user] [full-path] [custom-daemon-name]
+
+[socket type]
+stream #which is 99% of the choices 
+datagram
+rdm
+sequence packet
+
+[protocal]
+any protocol defined in /etc/protocol 
+
+[wait/nowait]
+wait :  single threaded service needed to be run all the time and consume all resourece for one connection
+nowait : multi-threaded service
+
+[user]
+any user
+
+[full-path]
+[custom-daemon-name]

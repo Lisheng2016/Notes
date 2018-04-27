@@ -1,0 +1,16 @@
+1.useradd uses login.defs as default account requirement when creating new account.
+
+2./etc/nsswich contains the entry of user and group authentcation:
+files = local file
+sss = ldap authentication
+others not listed
+
+3./etc/securetty defines what kind of tty root user can use
+/etc/usertty defines what tty a user can use,if usertty do not exist,then the authentication is taken over with the PAM portable authentication module.
+
+4.getent $USER
+getent will show where a specific user get authenticated (get the authentication entrance)
+
+5./etc/skel 
+contains necessory account config files like .bash_logout .bash_profile .bashrc ...
+

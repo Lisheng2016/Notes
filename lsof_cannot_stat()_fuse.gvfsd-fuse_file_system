@@ -1,0 +1,36 @@
+Content in shell prompt: 
+lsof: WARNING: can't stat() fuse.gvfsd-fuse file system /home/admin/.gvfs
+      Output information may be incomplete.
+
+Explaination:
+
+FUSE and its access rights
+
+lsof by default checks all mounted file systems including FUSE - file systems implemented in user space which have special access rights in Linux.
+
+There is a FUSE virtual filesystem mounted at ~/.gvfs.
+
+For the majority of filesystem accesses, permissions are ignored for the root user. However, FUSE virtual filesystem mounts are one of the rare exceptions. FUSE virtual filesystems are normally restricted to the user who mounted them.
+
+In this case, the gvfs-fuse-daemon command (run as part of your desktop session) created this mount, belonging to you, and no-one else can access it, including root.
+
+
+As you can see in this answer on Ask Ubuntu a mounted GVFS file system (special case of FUSE) is normally accessible only to the user which mounted it (the owner of gvfsd-fuse). Even root cannot access it. To override this restriction it is possible to use mount options allow_root and allow_other. The option must be also enabled in the FUSE daemon which is described for example :
+
+eg:
+$ sudo sed -i -e 's/#user_allow_other/user_allow_other/' /etc/fuse.conf
+
+source:
+https://askubuntu.com/questions/401454/how-to-get-sudo-access-to-shares-mounted-by-gigolo/401509#401509
+
+but in my case i do not need to (and should not) change the access rights.
+
+Excluding file systems from lsof
+lsof -e /path/to/mounted/filesystem
+
+Checking certain files by lsof
+And in case i would like to check certain files and exclude this gvfs file system,this is what i should use:
+
+lsof -e /path/to/avoid -f -- /path/to/sepecific/file
+
+using  -f option without a value directly following it then specify a list of files after the "end of options" separator '--'. This will be considerably faster.
